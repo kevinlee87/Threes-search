@@ -74,29 +74,34 @@ public:
 	}
 
 	reward slide_left() {
+		int combine_once;
 		board prev = *this;
 		reward score = 0;
 		for (int r = 0; r < 4; r++) {
 			auto& row = tile[r];
-			int top = 0, hold = 0;
+			combine_once = 0;
 			for (int c = 0; c < 4; c++) {
-				int tile = row[c];
-				if (tile == 0) continue;
-				row[c] = 0;
-				if (hold) {
-					if (tile == hold) {
-						row[top++] = ++tile;
-						score += (1 << tile);
-						hold = 0;
-					} else {
-						row[top++] = hold;
-						hold = tile;
+				if (c == 0) continue;
+				if (row[c] == 0)	continue;
+				if (row[c-1] == 0){
+					row[c-1] = row[c];
+					row[c] = 0;
+					continue;
+				}
+				if(combine_once == 0){
+					if (row[c-1] == row[c] && row[c] > 2 && row[c] < 15) {	// same number & number > 3
+						row[c-1] ++;
+						row[c] = 0;
+						score += (pow(3,(row[c-1] - 2)) - pow(3,(row[c-1] - 3)) * 2);
+						combine_once = 1;
+					}else if ((row[c-1] + row[c]) == 3) {	// 1 + 2 = 3
+						row[c-1] = 3;
+						row[c] = 0;
+						score += row[c-1];
+						combine_once = 1;
 					}
-				} else {
-					hold = tile;
 				}
 			}
-			if (hold) tile[r][top] = hold;
 		}
 		return (*this != prev) ? score : -1;
 	}
@@ -107,9 +112,9 @@ public:
 		return score;
 	}
 	reward slide_up() {
-		rotate_right();
-		reward score = slide_right();
 		rotate_left();
+		reward score = slide_left();
+		rotate_right();
 		return score;
 	}
 	reward slide_down() {

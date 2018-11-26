@@ -83,7 +83,7 @@ public:
 		dfs('a',tile,3,-1);
 	}
 
-	answer solve(const board& state, state_type type = state_type::before, int t[6]) {
+	answer solve(const board& state, state_type type = state_type::before) {
 		// TODO: find the answer in the lookup table and return it
 		//       do NOT recalculate the tree at here
 		// to fetch the hint (if type == state_type::after, hint will be 0)
