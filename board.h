@@ -165,16 +165,17 @@ public:
 
 public:
 	friend std::ostream& operator <<(std::ostream& out, const board& b) {
-		for (int i = 0; i < 16; i++) {
-			out << std::setw(std::min(i, 1)) << "" << ((1 << b(i)) & -2u);
+		for (int i = 0; i < 6; i++) {
+			if(b(i) > 2)	out << std::setw(std::min(i, 1)) << "" << (pow(2,b(i) - 3) * 3);
+			else	out << std::setw(std::min(i, 1)) << "" << b(i);
 		}
 		return out;
 	}
 	friend std::istream& operator >>(std::istream& in, board& b) {
-		for (int i = 0; i < 16; i++) {
+		for (int i = 0; i < 6; i++) {
 			while (!std::isdigit(in.peek()) && in.good()) in.ignore(1);
 			in >> b(i);
-			b(i) = std::log2(b(i));
+			if(b(i) > 2)	b(i) = std::log2(b(i)/3) + 3;
 		}
 		return in;
 	}

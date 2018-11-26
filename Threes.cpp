@@ -37,9 +37,11 @@ int main(int argc, const char* argv[]) {
 	state_type type;
 	std::cout << std::setprecision(precision);
 	state_hint hint(state);
-	while (fp1 >> type >> tile[0] >> tile[1] >> tile[2] >> tile[3] >> tile[4] >> tile[5] >> hint) {
+	//while (fp1 >> type >> tile[0] >> tile[1] >> tile[2] >> tile[3] >> tile[4] >> tile[5] >> hint) {
+	while(fp1 >> type >> state >> hint){
 		auto value = solve.solve(state, type);
-		fp2 << type << " " << tile[0] << " " << tile[1] << " " << tile[2] << " " << tile[3] << " " << tile[4] << " " << tile[5] << " " << hint;
+		//fp2 << type << " " << tile[0] << " " << tile[1] << " " << tile[2] << " " << tile[3] << " " << tile[4] << " " << tile[5] << " " << hint;
+		fp2 << type << " " << state << " " << hint;
 		fp2 << " = " << value << std::endl;
 	}
 

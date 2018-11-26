@@ -98,11 +98,10 @@ public:
 			index[i] = current;
 			current++;
 		}
-		board::cell hint = state_hint(state);
 		for(i = 0;i < 6;i++){
-			tile[i] = index[state(i)];
-			if(tile[i] > 8)	skip = 1;
+			tile[i] = state(i);
 		}
+		board::cell hint = state_hint(state);
 		if(skip == 0){
 			if(type.is_after()){
 				key = tile[0] * 10000000 + tile[1] * 1000000 + tile[2] * 100000 + tile[3] * 10000 + tile[4] * 1000 + tile[5] * 100 + hint * 10;
@@ -125,8 +124,7 @@ public:
 				return {-1};
 			}
 		}
-		else	return{-1};
-		// for an illegal state, simply return {}
+		return {-1};
 	}
 	
 	void dfs(char type,int tile[6], int hint, int pre_action){
@@ -396,7 +394,7 @@ public:
 
 private:
 	answer* table;
-	int index[129];
+	int index[1000];
 	std::array<int, 3> bag;
 };
 
