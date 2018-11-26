@@ -131,6 +131,9 @@ public:
 		int move, move_flag, cur, key, s;
 		int save[6];
 		float sum, max, avg_s;
+		max = 0;
+		sum = 0;
+		s = 0;
 		//std::cout << type << "\n" << tile[0] << " " << tile[1] << " " << tile[2] << "   +" << hint << "\n" << tile[3] << " " << tile[4] << " " << tile[5] << "   " << pre_action << "\n";
 		if(pre_action == -1)	return;
 		else{
@@ -260,6 +263,7 @@ public:
 				move = 0;
 				move_flag = 0;
 				s = 9 * 10000000 + tile[0] * 1000000 + tile[1] * 100000 + tile[2] * 10000 + tile[3] * 1000 + tile[4] * 100 + tile[5] * 10 + hint;
+				if(!std::isnan(table[s].avg))	return;		
 				for(int i = 0;i < 3;i++){
 					if(tile[i + 3] == 0)	continue;
 					if(tile[i] == 0){
